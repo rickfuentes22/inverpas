@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import "../styles/HomePage.css";
 import { Nav, NavDropdown } from "react-bootstrap";
@@ -18,14 +19,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
 import ScrollToTop from "react-scroll-to-top";
+=======
+import React, { useState, useEffect } from 'react';
+import "../styles/HomePage.css";
+import { Nav, NavDropdown } from "react-bootstrap";
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { faHome, faWater, faMagnifyingGlassChart, faBolt, faCertificate, faWrench, faIdBadge, faChevronUp} from '@fortawesome/free-solid-svg-icons'; // Aquí elimina la importación duplicada
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import ScrollToTop from 'react-scroll-to-top';
+>>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf
 
 const HomePage = () => {
   const [isTransparent, setIsTransparent] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
+<<<<<<< HEAD
       const scrollTop =
         window.pageYOffset || document.documentElement.scrollTop;
+=======
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+>>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf
       if (scrollTop > 50) {
         setIsTransparent(true); // Cambiar a true para aplicar opacidad
       } else {
@@ -33,6 +48,7 @@ const HomePage = () => {
       }
     };
 
+<<<<<<< HEAD
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -56,6 +72,11 @@ const HomePage = () => {
       if (contactLink) {
         contactLink.removeEventListener("click", scrollToFooter);
       }
+=======
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+>>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf
     };
   }, []);
 
@@ -104,6 +125,7 @@ const HomePage = () => {
 
                 <NavDropdown
                   title={
+<<<<<<< HEAD
                     <span style={{ color: "white" }}>
                       <img
                         src="/pipe.png"
@@ -115,6 +137,13 @@ const HomePage = () => {
                           filter: "brightness(1.5) contrast(2) invert(1)",
                         }}
                       />
+=======
+                    <span
+                      style={{
+                        color: "white",
+                      }}
+                    >
+>>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf
                       SERVICIOS
                     </span>
                   }
@@ -122,6 +151,7 @@ const HomePage = () => {
                   drop="down"
                 >
                   <NavDropdown.Item style={{ fontSize: "14px" }}>
+<<<<<<< HEAD
                     <Link
                       to="/estudiocaudal"
                       style={{ color: "black", textDecoration: "none" }}
@@ -214,6 +244,59 @@ const HomePage = () => {
                   BLOG
                 </Nav.Link>
                  <Nav.Link id="contact-link" style={{ color: "white", fontSize: "13px" }}>
+=======
+                    <FontAwesomeIcon icon={faWater} /> Estudios de caudales
+                  </NavDropdown.Item>
+                  <NavDropdown.Item style={{ fontSize: "14px" }}>
+                    <img
+                      src="/automa.png"
+                      width="20"
+                      height="20"
+                      className="telegraf"
+                      alt=""
+                    />
+                    Automatización
+                  </NavDropdown.Item>
+                  <NavDropdown.Item style={{ fontSize: "14px" }}>
+                    <FontAwesomeIcon icon={faMagnifyingGlassChart} />{" "}
+                    Monitorización
+                  </NavDropdown.Item>
+                  <NavDropdown.Item style={{ fontSize: "14px" }}>
+                    <FontAwesomeIcon icon={faWrench} /> Diseño mecánico
+                  </NavDropdown.Item>
+                  <NavDropdown.Item style={{ fontSize: "14px" }}>
+                    <FontAwesomeIcon icon={faBolt} /> Instalaciones electricas
+                  </NavDropdown.Item>
+                  <NavDropdown.Item style={{ fontSize: "14px" }}>
+                    <FontAwesomeIcon icon={faCertificate} /> Certificaciones
+                  </NavDropdown.Item>
+                  <NavDropdown.Item style={{ fontSize: "14px" }}>
+                    <img
+                      src="/telegraf.png"
+                      width="20"
+                      height="20"
+                      className="telegraf"
+                      alt=""
+                    />
+                    Topografía
+                  </NavDropdown.Item>
+                </NavDropdown>
+                <NavDropdown
+                  title={
+                    <span style={{ color: "white" }}>INFRAESTRUCTURA</span>
+                  }
+                  style={{ fontSize: "13px", marginRight: "1px" }}
+                  drop="down"
+                >
+                  <NavDropdown.Item style={{ fontSize: "14px" }}>
+                    Opción 1
+                  </NavDropdown.Item>
+                  <NavDropdown.Item style={{ fontSize: "14px" }}>
+                    Opción 2
+                  </NavDropdown.Item>
+                </NavDropdown>
+                <Nav.Link href="/" style={{ color: "white", fontSize: "13px" }}>
+>>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf
                   <FontAwesomeIcon
                     icon={faIdBadge}
                     style={{ marginRight: "5px" }}
@@ -262,7 +345,11 @@ const HomePage = () => {
         </button>
       </div>
 
+<<<<<<< HEAD
       <div style={{ backgroundImage: "url('/')" }}>
+=======
+      <div style={{ backgroundImage: "url('/wat.jpg')" }}>
+>>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf
         <div class="container">
           <div class="content">
             <h2 class="titulo-servicios">¿Quienes Somos?</h2>
@@ -300,7 +387,10 @@ const HomePage = () => {
             </div>
           </div>
         </div>
+<<<<<<< HEAD
         //
+=======
+>>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf
         <div class="container">
           <div class="content">
             <h2 class="titulo-servicios">¿Qué Servicios Ofrecemos?</h2>
@@ -312,6 +402,7 @@ const HomePage = () => {
         <div class="container">
           <div class="card-group">
             <div class="card position-relative">
+<<<<<<< HEAD
               <Link to="/estudiocaudal">
                 <img src="/cau.jpg" class="card-img-top" alt="..." />
                 <div class="card-body">
@@ -334,11 +425,36 @@ const HomePage = () => {
                   <h5 class="card-title">Monitorización</h5>
                 </div>
               </Link>
+=======
+              <img src="/cau.jpg" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">Estudios de caudales</h5>
+              </div>
+            </div>
+            <div class="card position-relative">
+              <img src="/auto.jpeg" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">Automatización</h5>
+              </div>
+            </div>
+            <div class="card position-relative">
+              <img src="/tele.jpeg" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">Telemetrias</h5>
+              </div>
+            </div>
+            <div class="card position-relative">
+              <img src="/pro.jpg" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">Proyectos electricos</h5>
+              </div>
+>>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf
             </div>
           </div>
 
           <div class="card-group">
             <div class="card position-relative">
+<<<<<<< HEAD
               <Link to="/diseno">
                 <img src="/dis.jpg" class="card-img-top" alt="..." />
                 <div class="card-body">
@@ -369,16 +485,49 @@ const HomePage = () => {
                   <h5 class="card-title">Topografía</h5>
                 </div>
               </Link>
+=======
+              <img src="/dis.jpg" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">Diseño mecánico</h5>
+              </div>
+            </div>
+            <div class="card position-relative">
+              <img src="/inst.jpg" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">Instalaciones eléctricas </h5>
+              </div>
+            </div>
+            <div class="card position-relative">
+              <img src="/cert.jpg" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">Certificaciones </h5>
+              </div>
+            </div>
+            <div class="card position-relative">
+              <img src="/topografia.jpg" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">Topografía</h5>
+              </div>
+>>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf
             </div>
           </div>
 
           <div>
+<<<<<<< HEAD
             <div></div>
             <ScrollToTop smooth className="scrollToTopButton">
               <FontAwesomeIcon icon={faChevronUp} />
               Scroll To Top
             </ScrollToTop>
           </div>
+=======
+      <div></div>
+      <ScrollToTop smooth className="scrollToTopButton">
+        <FontAwesomeIcon icon={faChevronUp} />
+        Scroll To Top
+      </ScrollToTop>
+    </div>
+>>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf
         </div>{" "}
         {/* div final de imagen de fonde */}
         <a
@@ -416,6 +565,7 @@ const HomePage = () => {
             </div>
           </div>
         </div>
+<<<<<<< HEAD
         <div className="footer" id="footer">
         {/* Footer section with improved styling */}
         <div className="footer-social">
@@ -428,6 +578,20 @@ const HomePage = () => {
         </div>
       </div>
       </div>
+=======
+        <div className="footer">
+          {/* Footer section with improved styling */}
+          <div className="footer-social">
+            <a href="https://www.instagram.com/your_instagram_page">
+              <img src="/iglogo.png" alt="Instagram" />
+            </a>
+            <a href="https://www.facebook.com/your_facebook_page">
+              <img src="/fblogo.png" alt="Facebook" />
+            </a>
+          </div>
+        </div>
+      </div>
+>>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf
     </div>
   );
 };

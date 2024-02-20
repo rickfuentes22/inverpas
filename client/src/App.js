@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Auto from "./pages/Auto";
 import Certificaciones from "./pages/Certificaciones";
@@ -28,6 +29,28 @@ function App() {
 
       </Routes>
     </BrowserRouter>
+=======
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import { useSelector } from "react-redux";
+import Spinner from "./components/Spinner";
+
+function App() {
+  const { loading } = useSelector((state) => state.alerts);
+
+  return (
+    <>
+      <BrowserRouter>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+          </Routes>
+        )}
+      </BrowserRouter>
+    </>
+>>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf
   );
 }
 
