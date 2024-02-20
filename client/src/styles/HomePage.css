@@ -68,19 +68,6 @@
   background-color: transparent;
 }
 
-<<<<<<< HEAD
-=======
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
->>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf
 
 .card:hover .overlay {
   opacity: 1;
@@ -95,23 +82,9 @@
 }
 
 .titulo-servicios {
-<<<<<<< HEAD
   color: rgb(0, 0, 0);
   font-weight: bold;
   text-align: center;
-=======
-  color: rgb(255, 255, 255);
-  font-weight: bold;
-  text-align: center;
-  text-shadow: 3px 3px 3px rgb(0, 0, 0);
-}
-
-.inverpas-logo {
-  color: rgb(255, 255, 255);
-  font-weight: bold;
-  text-shadow: 3px 3px 3px rgb(0, 0, 0);
-  margin-top: 32px;
->>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf
 }
 
 .dropdown-toggle::after {
@@ -120,16 +93,9 @@
   border-left: 0.3em solid transparent !important;
 }
 .card-text {
-<<<<<<< HEAD
   color: rgb(57, 49, 49);
   font-weight: bold;
   text-align: center;
-=======
-  color: rgb(255, 255, 255);
-  font-weight: bold;
-  text-align: center;
-  text-shadow: 3px 3px 3px rgb(0, 0, 0);
->>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf
 }
 
 .imagentele {
@@ -197,7 +163,6 @@
   transform: translateX(-3px);
 }
 
-<<<<<<< HEAD
 .pipe {
   transform: translate(-5px, -2px);
 
@@ -206,5 +171,3 @@
 }
 
 
-=======
->>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf

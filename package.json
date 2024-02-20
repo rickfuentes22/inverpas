@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "name": "inverpas",
-=======
   "name": "INVERPAS",
->>>>>>> 6833c90c731da18e46a958ef8a2b1f1a58de76bf
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
