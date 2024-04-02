@@ -1,0 +1,72 @@
+.containerMensajes {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .contentMensajes {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .titulo-serviciosMensajes {
+    color: #333;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  tbody tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    left: 40px; 
+    background-color: #25d366;
+    color: #fff;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 100;
+  }
+  
+  .whatsapp-float:hover {
+    background-color: #128c7e;
+  }
+  
+  .whatsapp-icon {
+    margin-top: 15px;
+  }
+  

@@ -1,149 +1,145 @@
-const solicitanteModel = require("../models/solicitanteModel");
-const userModel = require("../models/userModels");
-const Sequelize = require("sequelize");
-const path = require("path");
-const fs = require("fs");
+const adminModel = require('../models/adminModel')
+const productosModel = require('../models/productosModel');
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken');
+const path = require('path');
 
-const getAllUsersController = async (req, res) => {
-  try {
-    const users = await userModel.findAll();
-
-    res.status(200).send({
-      success: true,
-      message: "Lista de usuarios",
-      data: users,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false,
-      message: "Error al buscar usuarios",
-      error: error.message,
-    });
-  }
-};
-
-const getAllSolicitantesController = async (req, res) => {
-  try {
-    const solicitantes = await solicitanteModel.findAll();
-
-    const solicitantesConPDF = solicitantes.map((solicitante) => {
-      const pdfFileName = solicitante.pdfPath;
-      if (pdfFileName) {
-        solicitante.pdfURL = `/api/pdfs/${pdfFileName}`;
+  
+  // login callback
+  const loginController = async (req, res) => {
+    try {
+      const admin = await adminModel.findOne({ email: req.body.email });
+  
+      if (!admin) {
+        return res
+          .status(200)
+          .send({ message: "Usuario no encontrado", success: false });
       }
-      return solicitante;
-    });
-
-    res.status(200).send({
-      success: true,
-      message: "Solicitantes lista",
-      data: solicitantesConPDF,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false,
-      message: "Error al buscar datos",
-      error: error.message,
-    });
-  }
-};
-
-const changeAccountStatusController = async (req, res) => {
-  try {
-    const { solicitanteId, status } = req.body;
-
-    const [affectedRows] = await solicitanteModel.update(
-      { status },
-      {
-        where: { id: solicitanteId },
+  
+      const isMatch = await bcrypt.compare(req.body.password, admin.password);
+  
+      if (!isMatch) {
+        return res
+          .status(200)
+          .send({ message: "Correo o contraseña invalidos", success: false });
       }
-    );
-
-    if (affectedRows === 0) {
-      return res.status(404).send({
+  
+      const token = jwt.sign({ id: admin.id }, process.env.JWT_SECRET, {
+        expiresIn: "1d",
+      });
+  
+      res
+        .status(200)
+        .send({ message: "Inicio de sesion exitoso", success: true, token });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ message: `Error en login ${error.message}` });
+    }
+  };
+  
+  const authController = async (req, res) => {
+    try {
+      const admin = await adminModel.findById(req.body.adminId);
+      if (!admin) {
+        return res.status(200).send({
+          message: "Usuario no encontrado",
+          success: false,
+        });
+      }
+  
+      // El usuario existe, ahora puedes acceder a sus propiedades
+      admin.password = undefined;
+  
+      res.status(200).send({
+        success: true,
+        data: admin,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        message: "Auth error",
         success: false,
-        message: "Solicitante no encontrado",
+        error,
       });
     }
+  };
 
-    const solicitante = await solicitanteModel.findByPk(solicitanteId);
-
-    const user = await userModel.findOne({
-      where: { id: solicitante.userId },
-    });
-
-    const notification = user.notification || [];
-
-    notification.push({
-      type: "solicitante-account-request-updated",
-      message: `Tu solicitud de tramite a sido ${status} `,
-      onClickPath: "/notification",
-    });
-
-    userModel
-      .update({ notification }, { where: { id: user.id } })
-      .then(() => {
-        console.log("Notificación actualizada con éxito.");
-      })
-      .catch((error) => {
-        console.error("Error al actualizar la notificación:", error);
-      });
-
-    user.isSolicitante = status === "aprobado" ? true : false;
-    await user.save();
-
-    res.status(201).send({
-      success: true,
-      message: "Estado  actualizado",
-      data: solicitante,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false,
-      message: "Error de estado ",
-      error: error.message,
-    });
-  }
-};
-const getDatosUsuarioController = async (req, res) => {
+  // Controlador para crear un nuevo producto
+const createProducto = async (req, res) => {
   try {
-    const users = await userModel.findOne({ where: { id: userId } });
-    res.status(200).send({
-      success: true,
-      message: "Lista de usuarios",
-      data: users,
-    });
+    const { productName, productDescription } = req.body;
+    const newProduct = await productosModel.create({ productName, productDescription });
+    res.status(201).json({ success: true, data: newProduct });
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false,
-      message: "Error al buscar usuarios",
-      error: error.message,
-    });
+    console.error('Error al crear el producto:', error);
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 
-const getPdfController = (req, res) => {
-  const fileName = req.params.fileName;
-  const filePath = path.join(__dirname, "../uploads", fileName);
+// Controlador para obtener todos los productos
+const getAllProductos = async (req, res) => {
+  try {
+    const productos = await productosModel.find();
+    res.status(200).json({ success: true, data: productos });
+  } catch (error) {
+    console.error('Error al obtener los productos:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
 
-  res.sendFile(filePath, (err) => {
-    if (err) {
-      console.error("Error al enviar el archivo:", err);
-      res.status(err.status).end();
-    } else {
-      console.log("Archivo enviado correctamente:", fileName);
+const addProduct = async (req, res) => {
+  try {
+      let productImage = '';
+      if (req.file) {
+          productImage = req.file.filename;
+      }
+
+      const { productName, productDescription } = req.body;
+      const newProduct = new productosModel({
+          productName: productName,
+          productDescription: productDescription,
+          productImage: productImage,
+      });
+
+      await newProduct.save();
+
+      res.status(201).json({ message: 'Producto agregado correctamente' });
+  } catch (error) {
+      console.error('Error al agregar producto:', error);
+      res.status(500).json({ message: 'Error al agregar producto', error: error.message });
+  }
+};
+
+// Controlador para obtener la imagen de un producto por su ID
+const getProductImageById = async (req, res) => {
+  try {
+      const product = await productosModel.findById(req.params.id);
+      if (product && product.productImage) {
+          const imagePath = path.join(__dirname, '..', 'uploads', product.productImage);
+          res.sendFile(imagePath);
+      } else {
+          throw new Error('El producto no tiene una imagen asociada.');
+      }
+  } catch (error) {
+      console.error('Error al obtener la imagen del producto:', error);
+      res.status(500).json({ message: 'Error al obtener la imagen del producto', error: error.message });
+  }
+};
+
+const deleteProduct = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const deletedProduct = await productosModel.findByIdAndDelete(productId);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ success: false, message: 'Producto no encontrado' });
     }
-  });
+
+    res.status(200).json({ success: true, message: 'Producto eliminado correctamente' });
+  } catch (error) {
+    console.error('Error al eliminar producto:', error);
+    res.status(500).json({ success: false, message: 'Error al eliminar producto', error: error.message });
+  }
 };
 
-module.exports = {
-  getAllSolicitantesController,
-  getAllUsersController,
-  changeAccountStatusController,
-  getDatosUsuarioController,
-  getPdfController,
-};
+module.exports = { loginController, addProduct, getProductImageById, createProducto, getAllProductos, deleteProduct };

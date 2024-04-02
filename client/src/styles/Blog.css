@@ -1,0 +1,35 @@
+.blog-container {
+    padding: 20px;
+}
+  
+.news-container {
+    margin-top: 20px;
+}
+  
+.card-container-blog {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+  
+.card-blog {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 300px; /* Establece un ancho fijo para los cards */
+  }
+  
+  .card-blog h3 {
+    margin-bottom: 10px;
+  }
+  
+  .card-blog img {
+    width: 100%; /* Ajusta el ancho de la imagen al 100% del contenedor */
+    height: auto; /* Permite que la altura se ajuste automáticamente según el ancho */
+  }
+  
+  .card-blog p {
+    margin-top: 10px; /* Añade un espacio entre el título y el texto */
+  }
+  

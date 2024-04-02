@@ -1,4 +1,6 @@
 const multer = require("multer");
+const path = require("path");
+const { v4: uuidv4 } = require('uuid');
 
 // Configuración de almacenamiento para Multer
 const storage = multer.diskStorage({
@@ -7,19 +9,16 @@ const storage = multer.diskStorage({
     cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    // Generar nombres de archivo únicos
-    cb(null, file.originalname);
+    // Generar nombres de archivo únicos usando UUID
+    const uniqueFilename = `${uuidv4()}${path.extname(file.originalname)}`;
+    cb(null, uniqueFilename);
   },
 });
 
-// Configuración de Multer
+// Configuración adicional de Multer para filtrar archivos
 const upload = multer({
   storage: storage,
-  limits: {
-    // Establecer límites para el tamaño de archivo y la cantidad máxima de archivos
-    fileSize: 1024 * 1024 * 5, // Tamaño máximo de 5MB por archivo (puedes ajustar este valor)
-    files: 2, // Máximo 2 archivos
-  },
 });
+
 
 module.exports = upload;

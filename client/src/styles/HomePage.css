@@ -1,50 +1,16 @@
-.footer {
-  display: flex;
-  justify-content: center;
-  background-color: #010f5e;
-  padding: 10px;
-  margin-top: auto; /* Empuja el footer hacia la parte inferior */
-}
-
-.footer-social {
-  display: flex;
-  gap: 20px; /* Espacio entre los íconos */
-  align-items: center; /* Centra verticalmente los íconos en el footer */
-}
-
-.footer-social a {
-  text-decoration: none;
-  color: #fff;
-  display: flex;
-  align-items: center; /* Centra verticalmente los íconos dentro de los enlaces */
-}
-
-/* Ajusta el tamaño del logotipo de Facebook en 35px */
-.footer-social a:first-child img {
-  width: 35px; /* Ajusta el tamaño del logotipo de Facebook a 35px */
-  height: 35px;
-  margin: 0; /* Elimina el margen si lo hay para alinearlos */
-}
-
-.footer-social a:last-child img {
-  width: 55px;
-  height: 55px;
-}
-
 .card-title {
   position: absolute;
-  top: 50%;
+  top: 92%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
+  color: rgb(0, 0, 0);
   padding: 10px;
   border-radius: 5px;
   font-size: 1.2em;
   font-weight: bold;
   text-align: center;
   max-width: 90%;
-  z-index: 1;
-  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.8);
+  z-index: 1; /* Aseguramos que el título esté encima de la imagen */
 }
 
 .card-group {
@@ -55,14 +21,15 @@
   border-radius: 10px !important;
   width: calc(100% - 20px);
   height: 200px;
-  object-fit: cover; /* Escala la imagen para que llene el contenedor, manteniendo su relación de aspecto */
-  margin: 10px; /* Agrega un margen de 10px a todos los lados */
-  transition: filter 0.3s;
+  object-fit: cover;
+  margin: 10px;
+  position: relative;
+  filter: brightness(0.9) saturate(100%) contrast(100%);
+  transition: filter 0.3s; /* Agregamos transición para suavizar el cambio */
 }
 
 .card {
   border: none !important; /* Elimina los bordes de las tarjetas */
-  box-shadow: none !important; /* Elimina cualquier sombra de las tarjetas */
   position: relative;
   overflow: hidden;
   background-color: transparent;
@@ -165,9 +132,29 @@
 
 .pipe {
   transform: translate(-5px, -2px);
-
-
-
 }
+
+
+.scrollToTopButton {
+  position: fixed !important; /* Hace que el botón se mantenga fijo en la ventana del navegador */
+  bottom: 40px !important; /* Posiciona el botón 20px desde la parte inferior */
+  right: 40px !important; /* Posiciona el botón 20px desde el lado derecho */
+  background-color: #04a8df !important; /* Color de fondo del botón */
+  color: white !important; /* Color del texto del botón */
+  border: none !important; /* Elimina el borde del botón */
+  border-radius: 50% !important; /* Hace que el botón tenga bordes redondeados */
+  width: 40px !important; /* Ancho del botón */
+  height: 40px !important; /* Altura del botón */
+  display: flex !important; /* Hace que los elementos dentro del botón se muestren en línea */
+  align-items: center !important; /* Centra verticalmente los elementos dentro del botón */
+  justify-content: center !important; /* Centra horizontalmente los elementos dentro del botón */
+  cursor: pointer !important; /* Cambia el cursor al pasar sobre el botón */
+  transition: background-color 0.3s ease !important; /* Agrega una transición suave al cambiar el color de fondo */
+}
+
+.scrollToTopButton:hover {
+  background-color: #0056b3 !important; /* Cambia el color de fondo cuando se pasa el cursor sobre el botón */
+}
+
 
 

@@ -1,0 +1,134 @@
+@import url('https://rsms.me/inter/inter-ui.css');
+::selection {
+  background: #2D2F36;
+}
+::-webkit-selection {
+  background: #2D2F36;
+}
+::-moz-selection {
+  background: #2D2F36;
+}
+.page {
+  background: #82829a;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Cambiado a 100% */
+  position: absolute;
+  place-content: center;
+  width: 100%; /* Cambiado a 100% */
+}
+@media (max-width: 767px) {
+  .page {
+    height: auto;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+}
+.containerLogin {
+  display: flex;
+  height: 320px;
+  margin: 0 auto;
+  width: 640px;
+}
+@media (max-width: 767px) {
+  .containerLogin {
+    flex-direction: column;
+    height: 630px;
+    width: 320px;
+  }
+}
+.left {
+  background: white;
+  height: calc(100% - 40px);
+  top: 20px;
+  position: relative;
+  width: 50%;
+}
+@media (max-width: 767px) {
+  .left {
+    height: 100%;
+    left: 20px;
+    width: calc(100% - 40px);
+    max-height: 270px;
+  }
+}
+.login {
+  font-size: 50px;
+  font-weight: 900;
+  margin: 50px 40px 40px;
+}
+
+.right {
+  background: #474A59;
+  box-shadow: 0px 0px 40px 16px rgba(49, 95, 158, 0.77);
+  color: #F1F1F2;
+  position: relative;
+  width: 50%;
+}
+@media (max-width: 767px) {
+  .right {
+    flex-shrink: 0;
+    height: 100%;
+    width: 100%;
+    max-height: 350px;
+  }
+}
+.svg {
+  position: absolute;
+  width: 320px;
+}
+.path {
+  fill: none;
+  stroke: url(#linearGradient);
+  stroke-width: 4;
+  stroke-dasharray: 150 1386; /* Acorta la longitud de la línea */
+}
+
+.form {
+  margin: 40px;
+  position: absolute;
+}
+.label {
+  color:  #c2c2c5;
+  display: block;
+  font-size: 14px;
+  height: 16px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  width: 247px;
+}
+.input {
+  background: transparent;
+  border: 0;
+  color: #f2f2f2;
+  font-size: 20px;
+  height: 30px;
+  line-height: 30px;
+  outline: none !important;
+  width: 100%;
+}
+.input::-moz-focus-inner { 
+  border: 0; 
+}
+#submit {
+  color: #ffffff;
+  margin-top: 13px; /* Cambiado de 40px a 20px para moverlo más arriba */
+  transition: color 300ms;
+}
+#submit:focus {
+  color: #f2f2f2;
+}
+#submit:active {
+  color: #383efb;
+}
+
+.loginstyle {
+  margin-top: 70px;
+}
+
+.loginstyle img {
+  
+  width: 310px;
+  height: auto;
+
+}

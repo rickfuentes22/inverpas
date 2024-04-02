@@ -1,0 +1,118 @@
+.footer {
+    display: flex;
+    justify-content: space-between; /* Mueve los elementos al inicio del contenedor */
+    background-color: #a7a7a7;
+    padding: 20px;
+  }
+  
+  .footer-social {
+    display: flex;
+    gap: 20px; /* Espacio entre los íconos */
+    align-items: center;/* Centra verticalmente los íconos en el footer */
+  } 
+  
+  .footer-social a {
+    text-decoration: none;
+    display: flex;
+    align-items: center; /* Centra verticalmente los íconos dentro de los enlaces */
+  }
+  
+  /* Ajusta el tamaño del logotipo de Facebook en 35px */
+  .footer-social a:first-child img {
+    width: 35px; /* Ajusta el tamaño del logotipo de Facebook a 35px */
+    height: 35px;
+    margin-bottom:0px;
+  }
+  
+  .footer-social a:last-child img {
+    width: 55px;
+    height: 55px;
+    margin-bottom:0px;
+  }
+
+  .footer-social a:hover img {
+    transform: scale(1.2); /* Aumenta la escala del ícono al 120% */
+}
+  .contactinver {
+    display: flex;
+    flex-direction: column; /* Para alinear verticalmente los elementos */
+    justify-content: center; /* Para centrar verticalmente el contenido */
+    margin-left: 290px;
+    margin-bottom: 0; /* Ajusta el margen inferior */
+  }
+
+  .datosinverpas h4 {
+    margin-bottom: 30px; /* Ajusta el margen inferior para aumentar el espaciado entre líneas */
+  }
+  
+  .datosinverpas h4:last-child {
+    margin-bottom: 10; /* Elimina el margen inferior del último elemento h4 */
+  }
+
+  .datosinverpas a {
+    color: black; /* Cambia el color del enlace a negro */
+    text-decoration: none; /* Elimina el subrayado del enlace */
+
+}
+
+.datosinverpas a:hover {
+    text-decoration: none; /* Asegúrate de que no haya subrayado al pasar el mouse sobre el enlace */
+    text-decoration: underline; /* Subrayar el enlace al pasar el mouse sobre él */
+
+}
+  
+
+  .contactinver img {
+    width: 270px; /* Define el ancho de la imagen */
+    height: auto;
+    margin-bottom: 50px;
+  }
+  
+
+  .footer-contact {
+    margin-right: 490px;
+    margin-top: 30px;
+  }
+
+  .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px; /* Ajusta el margen inferior entre los grupos de formularios */
+}
+
+.form-group label {
+  margin-bottom: 5px; /* Ajusta el margen inferior entre la etiqueta y el input */
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 8px; /* Ajusta el relleno interno de los inputs */
+  border: 1px solid #ccc; /* Añade un borde alrededor de los inputs */
+  border-radius: 4px; /* Añade esquinas redondeadas a los inputs */
+}
+
+/* Ajusta el ancho de los inputs */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group textarea {
+  width: 200%; /* Establece el ancho al 100% */
+}
+
+/* Estilos adicionales para el botón */
+button[type="submit"] {
+  padding: 10px 20px; /* Ajusta el relleno del botón */
+  background-color: #004985; /* Cambia el color de fondo del botón */
+  color: white; /* Cambia el color del texto del botón */
+  border: none; /* Elimina el borde del botón */
+  border-radius: 4px; /* Añade esquinas redondeadas al botón */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+}
+
+button[type="submit"]:hover {
+  background-color: #072233; /* Cambia el color de fondo del botón al pasar sobre él */
+}
+
+.ant-message {
+  z-index: 1500; /* Asegúrate de que el z-index sea mayor que el del navbar */
+}

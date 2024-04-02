@@ -1,256 +1,171 @@
 import React, { useState, useEffect } from "react";
-import "../styles/HomePage.css";
-import { Nav, NavDropdown } from "react-bootstrap";
-import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
-import {
-  faHome,
-  faWater,
-  faMagnifyingGlassChart,
-  faBolt,
-  faCertificate,
-  faWrench,
-  faIdBadge,
-  faChevronUp,
-  faBlog,
-  faBox
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
-
-import ScrollToTop from "react-scroll-to-top";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import { Modal, Button, Form, Input, Card, Upload, Popconfirm, message } from "antd";
+import axios from "axios";
+import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
+import "../styles/Productos.css";
 
 const Productos = () => {
-  const [isTransparent, setIsTransparent] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [productos, setProductos] = useState([]);
+  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop =
-        window.pageYOffset || document.documentElement.scrollTop;
-      if (scrollTop > 50) {
-        setIsTransparent(true); // Cambiar a true para aplicar opacidad
-      } else {
-        setIsTransparent(false); // Cambiar a false para aplicar color sólido
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    const scrollToFooter = () => {
-      const footer = document.getElementById("footer");
-      if (footer) {
-        footer.scrollIntoView({ behavior: "smooth" });
-      }
-    };
-
-    const contactLink = document.getElementById("contact-link");
-    if (contactLink) {
-      contactLink.addEventListener("click", scrollToFooter);
+    // Verificar si el usuario ha iniciado sesión
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
     }
-
-    return () => {
-      if (contactLink) {
-        contactLink.removeEventListener("click", scrollToFooter);
-      }
-    };
+    // Obtener la lista de productos al cargar el componente
+    fetchProductos();
   }, []);
+
+  // Función para obtener la lista de productos
+  const fetchProductos = async () => {
+    try {
+      const response = await axios.get("/api/productos");
+      setProductos(response.data.data);
+    } catch (error) {
+      console.error("Error al obtener productos:", error);
+    }
+  };
+
+  // Función para manejar la presentación del modal de agregar producto
+  const handleAddProduct = () => {
+    setShowModal(true);
+  };
+
+  // Función para manejar la acción de agregar producto
+  const handleAddProductoSubmit = async (values) => {
+    try {
+      const formData = new FormData();
+      formData.append("productName", values.productName);
+      formData.append("productDescription", values.productDescription);
+      formData.append("productImage", imageFile);
+
+      // Lógica para agregar el producto con imagen utilizando Axios
+      await axios.post("/api/productos", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // Actualizar la lista de productos después de agregar uno nuevo
+      fetchProductos();
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error al agregar producto:", error);
+    }
+  };
+
+  // Función para manejar el cambio de archivo de imagen
+  const handleImageChange = (file) => {
+    setImageFile(file);
+    return false; // Necesario para evitar la carga automática del archivo
+  };
+
+  // Función para eliminar un producto
+  const handleDeleteProduct = async (productId) => {
+    try {
+      await axios.delete(`/api/productos/${productId}`);
+      message.success('Producto eliminado correctamente');
+      fetchProductos();
+    } catch (error) {
+      console.error('Error al eliminar el producto:', error);
+      message.error('Error al eliminar el producto');
+    }
+  };
 
   return (
-    <div className="navnav">
-      <div className="navbar-wrapper">
-        <nav
-          className={`navbar navbar-expand-lg fixed-top ${
-            isTransparent
-              ? "navbar-dark bg-dark navbar-opaque"
-              : "navbar-dark bg-dark"
-          }`}
-        >
-          <div className="container-fluid">
-            <img
-              src="/Inver.png"
-              width="50"
-              height="50"
-              className="rounded"
-              alt=""
-            />
-            <a className="navbar-brand" href="#">
-              INVERPAS
-            </a>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNavDropdown"
-              aria-controls="navbarNavDropdown"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
+    <div style={{ marginTop: "67px" }}>
+      <Navbar />
 
-            <div className="collapse navbar-collapse" id="navbarNavDropdown">
-              <Nav className="mx-auto">
-                <Nav.Link href="/" style={{ color: "white", fontSize: "13px" }}>
-                  <FontAwesomeIcon
-                    icon={faHome}
-                    style={{ marginRight: "5px" }}
-                  />
-                  INICIO
-                </Nav.Link>
+      {/* Agregar producto: mostrar solo si el usuario está logueado */}
+      {isLoggedIn && (
+        <div className="add-product-button">
+          <Button type="primary" onClick={handleAddProduct}>
+            Agregar Producto
+          </Button>
+        </div>
+      )}
 
-                <NavDropdown
-                  title={
-                    <span style={{ color: "white" }}>
-                      <img
-                        src="/pipe.png"
-                        width="18"
-                        height="18"
-                        className="pipe"
-                        alt=""
-                        style={{
-                          filter: "brightness(1.5) contrast(2) invert(1)",
-                        }}
-                      />
-                      SERVICIOS
-                    </span>
-                  }
-                  style={{ fontSize: "13px", marginRight: "1px" }}
-                  drop="down"
+      {/* Lista de productos */}
+      <div className="product-grid">
+        {productos.map((product) => (
+          <Card
+            key={product._id}
+            className="product-card"
+            cover={<img src={`/api/productos/image/${product._id}`} alt={product.productName} />}
+            actions={[
+              isLoggedIn && (
+                <Popconfirm
+                  title="¿Está seguro de eliminar este producto?"
+                  onConfirm={() => handleDeleteProduct(product._id)}
+                  okText="Sí"
+                  cancelText="No"
                 >
-                  <NavDropdown.Item style={{ fontSize: "14px" }}>
-                    <Link
-                      to="/estudiocaudal"
-                      style={{ color: "black", textDecoration: "none" }}
-                    >
-                      <FontAwesomeIcon icon={faWater} /> Estudios de caudales
-                    </Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item style={{ fontSize: "14px" }}>
-                    <Link
-                      to="/auto"
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      <img
-                        src="/automa.png"
-                        width="20"
-                        height="20"
-                        className="telegraf"
-                        alt=""
-                      />
-                      Automatización
-                    </Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item style={{ fontSize: "14px" }}>
-                    <Link
-                      to="/moni"
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      <FontAwesomeIcon icon={faMagnifyingGlassChart} />{" "}
-                      Monitorización
-                    </Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item style={{ fontSize: "14px" }}>
-                    <Link
-                      to="/diseno"
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      <FontAwesomeIcon icon={faWrench} /> Diseño mecánico
-                    </Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item style={{ fontSize: "14px" }}>
-                    <Link
-                      to="/instalaciones"
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      <FontAwesomeIcon icon={faBolt} /> Instalaciones electricas
-                    </Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item style={{ fontSize: "14px" }}>
-                    <Link
-                      to="/certificaciones"
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      <FontAwesomeIcon icon={faCertificate} /> Certificaciones
-                    </Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item style={{ fontSize: "14px" }}>
-                    <Link
-                      to="/topografia"
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      <img
-                        src="/telegraf.png"
-                        width="20"
-                        height="20"
-                        className="telegraf"
-                        alt=""
-                      />
-                      Topografía
-                    </Link>
-                  </NavDropdown.Item>
-                </NavDropdown>
-                <Nav.Link href="/productos" style={{ color: "white", fontSize: "13px" }}>
-                <FontAwesomeIcon icon={faBox} style={{ marginRight: "5px" }} />
-                  PRODUCTOS
-                </Nav.Link>
-                <Nav.Link href="/blog" style={{ color: "white", fontSize: "13px" }}>
-                  <FontAwesomeIcon
-                    icon={faBlog}
-                    style={{ marginRight: "5px" }}
-                  />
-                  BLOG
-                </Nav.Link>
-                <Nav.Link id="contact-link" style={{ color: "white", fontSize: "13px" }}>
-                  <FontAwesomeIcon
-                    icon={faIdBadge}
-                    style={{ marginRight: "5px" }}
-                  />
-                  CONTACTO
-                </Nav.Link>
-              </Nav>
+                  <Button type="danger" icon={<DeleteOutlined />} />
+                </Popconfirm>
+              ),
+              <a href="https://wa.me/+56988249970" target="_blank" rel="noopener noreferrer">
+                <Button type="primary">Comprar</Button>
+              </a>
+            ]}
+          >
+            <div className="product-info">
+              <h3>{product.productName}</h3>
+              <p>{product.productDescription}</p>
             </div>
-          </div>
-        </nav>
+          </Card>
+        ))}
       </div>
 
-      <div style={{ backgroundImage: "url('/rio.jpg')" }}>
-        <div class="container">
-          <div className="content" style={{ marginTop: "65px" }}>
-            <h2 class="titulo-servicios">PRODUCTOS</h2>
-            <h5>
-            Soluciones integrales de Gestión del Agua que comienzan con el Diseño
-
-            </h5>
-          </div>
-        </div>
-
-        <ScrollToTop smooth className="scrollToTopButton">
-          <FontAwesomeIcon icon={faChevronUp} />
-          Scroll To Top
-        </ScrollToTop>
-      </div>
-      <a
-        href="https://wa.me/+56988249970"
-        className="whatsapp-float"
-        target="_blank"
+      {/* Modal para agregar producto */}
+      <Modal
+        title="Agregar Producto"
+        visible={showModal}
+        onCancel={() => setShowModal(false)}
+        footer={null}
       >
-        <FontAwesomeIcon icon={faWhatsapp} className="whatsapp-icon" />
-      </a>
-      <div className="footer" id="footer">
-        {/* Footer section with improved styling */}
-        <div className="footer-social">
-          <a href="https://www.instagram.com/your_instagram_page">
-            <img src="/iglogo.png" alt="Instagram" />
-          </a>
-          <a href="https://www.facebook.com/your_facebook_page">
-            <img src="/fblogo.png" alt="Facebook" />
-          </a>
-        </div>
-      </div>
+        <Form onFinish={handleAddProductoSubmit}>
+          <Form.Item
+            name="productName"
+            label="Nombre del Producto"
+            rules={[{ required: true, message: "Por favor ingresa el nombre del producto" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="productDescription"
+            label="Descripción del Producto"
+            rules={[{ required: true, message: "Por favor ingresa la descripción del producto" }]}
+          >
+            <Input.TextArea />
+          </Form.Item>
+          <Form.Item
+            name="productImage"
+            label="Imagen del Producto"
+            rules={[{ required: true, message: "Por favor selecciona una imagen" }]}
+          >
+            <Upload
+              name="productImage"
+              listType="picture"
+              beforeUpload={handleImageChange}
+              showUploadList={false} // Evita mostrar la lista de subida del archivo
+            >
+              <Button icon={<UploadOutlined />}>Seleccionar Archivo</Button>
+            </Upload>
+          </Form.Item>
+
+          <Button type="primary" htmlType="submit">
+            Agregar
+          </Button>
+        </Form>
+      </Modal>
+
+      <Footer />
     </div>
   );
 };

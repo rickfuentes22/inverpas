@@ -1,24 +1,14 @@
-require("dotenv").config();
-const Sequelize = require("sequelize");
+const mongoose = require('mongoose')
+const colors = require('colors')
 
-const sequelize = process.env.JAWS_DB_URL
-  ? new Sequelize(process.env.JAWS_DB_URL)
-  : new Sequelize(
-      process.env.DB_NAME,
-      process.env.DB_USER,
-      process.env.DB_PASS,
+const connectDB = async() => {
+  try {
+    await mongoose.connect(process.env.MONGO_URL)
+    console.log(`Mongodb conectado ${mongoose.connection.host}`.bgGreen.white)
 
-      {
-        host: process.env.DEV_DB_HOST,
-        dialect: process.env.DEV_DB_DIALECT,
-        port: process.env.DEV_DB_PORT,
-        define: {
-          timestamps: true,
-          freezeTableName: true,
-          underscored: true,
-        },
-        dialectOptions: { decimalNumbers: true },
-      }
-    );
+  } catch (error) {
+    console.log(`Mongodb server Issue ${error}`.bgRed.white)
+  }
+}
 
-module.exports = sequelize;
+module.exports = connectDB;
